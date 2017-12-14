@@ -1,0 +1,109 @@
+﻿create database practicauber;
+
+create table cliente(
+nit int,
+nombre varchar(100),
+no_viajes int
+);
+
+alter table cliente add column apellido varchar(100) after nombre;
+alter table cliente modify apellido char;
+alter table cliente add constraint nit primary key (nit);
+
+create table sub_servicionormal(
+id_subservicio double primary key,
+nombre_servicio varchar(50)
+);
+
+alter table sub_servicionormal add column descripcion text after nombre_servicio;
+alter table sub_servicionormal modify id_subservicio int;
+alter table sub_servicionormal add constraint unique1 unique (nombre_servicio);
+
+
+create table servicio_normal(
+id_servicio int primary key,
+id_subservicio int,
+direccion_inicio varchar(100),
+direccion_final varchar(100),
+vehiculo int
+);
+
+alter table servicio_normal add column descripcion_servicio text after vehiculo;
+alter table servicio_normal modify descripcion_servicio varchar(200);
+alter table servicio_normal add constraint fkservicionormal foreign key  (id_subservicio)  references sub_servicionormal(id_subservicio) ;
+
+
+create table sub_serviciodomicilio(
+id_subserviciodomicilio double primary key,
+nombre_serviciod varchar(50)
+);
+
+
+alter table sub_serviciodomicilio add column descripciondoimicilio text;
+alter table sub_serviciodomicilio modify nombre_serviciod varchar(50);
+alter table sub_serviciodomicilio add constraint unique2 unique (nombre_serviciod);
+
+
+create table servicio_domicilio(
+id_serviciod int primary key,
+id_subserviciodomicilio text,
+direccion_inicio varchar(100),
+direccion_final varchar(100),
+vehiculo int
+);
+
+alter table servicio_domicilio add column descripcion_serviciod text;
+alter table servicio_domicilio modify id_subserviciodomicilio int;
+alter table servicio_domicilio add constraint fkserviciodomicilio foreign key  (id_subserviciodomicilio)  references sub_serviciodomicilio(id_subserviciodomicilio) ;
+
+create table vehiculo(
+placa_vehiculo int,
+marca varchar(50),
+modelo varchar(50),
+tipo_vehiculo int,
+conductor int
+
+)
+
+alter table vehiculo add column daños text;
+alter table vehiculo modify conductor  int not null;
+alter table vehiculo add constraint pkplaca_vehiculo primary key (placa_vehiculo);
+
+
+create table conductor(
+id_conductor int,
+nombre_conductor varchar(50),
+licencia varchar(50)
+
+)
+
+alter table conductor add column opiniones text;
+alter table conductor modify licencia  int ;
+alter table conductor add constraint pkcond primary key (id_conductor);
+
+
+create table uberchoppher(
+id_serviciochopper text,
+helicoptero int,
+fecha_inicio date,
+fecha_final date
+
+)
+
+alter table uberchoppher add column descripcion text;
+alter table uberchoppher modify id_serviciochopper  int ;
+alter table uberchoppher add constraint pk222 primary key (id_serviciochopper);
+
+
+create table uberunderage(
+id_servicio int,
+direccion_inicio int,
+direccion_final varchar(100),
+cantidadmenores int
+
+)
+
+alter table uberunderage add column ocacion_viaje text;
+alter table uberunderage modify direccion_inicio  date ;
+alter table uberunderage add constraint pk7772 primary key (id_servicio);
+
